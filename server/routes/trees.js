@@ -109,7 +109,9 @@ router.delete("/:id", (req, res, next) => {
  */
 // Your code here
 router.put("/:id", (req, res, next) => {
-    if (req.body.id != req.params.id) {
+    const reqBodyId = parseInt(req.body.id);
+    const reqParamsId = parseInt(req.params.id);
+    if (reqBodyId !== reqParamsId) {
         res.status(400).json({
             error: "ids do not match",
         });
@@ -121,7 +123,7 @@ router.put("/:id", (req, res, next) => {
             req.body.location,
             req.body.height_ft,
             req.body.ground_circumference_ft,
-            req.params.id,
+            reqParamsId,
         ];
 
         db.run(sql, params, (err) => {
